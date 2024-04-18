@@ -531,15 +531,17 @@ end
 
 ---Sets up the adapter and configuration for the `nvim-dap` plugin.
 ---{codelldbPath} - path to the `codelldb` binary.
+---{lldbPath} - path to the `lldb` binary.
 ---
 ---Sample {codelldbPath} - `/your/path/to/codelldb-aarch64-darwin/extension/adapter/codelldb`
 ---{loadBreakpoints} - if true or nil, sets up an autocmd to load breakpoints when a Swift file is opened.
 ---@param codelldbPath string
+---@param lldbpath string
 ---@param loadBreakpoints boolean|nil default: true
-function M.setup(codelldbPath, loadBreakpoints)
+function M.setup(codelldbPath, loadBreakpoints, lldbpath)
   local dap = require("dap")
   dap.configurations.swift = M.get_swift_configuration()
-  dap.adapters.codelldb = M.get_codelldb_adapter(codelldbPath)
+  dap.adapters.codelldb = M.get_codelldb_adapter(codelldbPath, lldbpath)
 
   if loadBreakpoints ~= false then
     vim.api.nvim_create_autocmd({ "BufReadPost" }, {
